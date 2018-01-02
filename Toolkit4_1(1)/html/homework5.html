@@ -1,0 +1,2052 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>homework5</title><meta name="generator" content="MATLAB 8.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2017-05-02"><meta name="DC.source" content="homework5.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput"><span class="comment">%Problem 3.3)</span>
+clear,clc
+beta=0.99;sigma=1;phi=1;alpha=1/3;epsilon=6;theta=2/3;Phi_pi=1.5;Phi_y=0.5;
+rho_v=0.5;rho_a=0.9;
+
+psi_ya=((1+phi)*sigma)/(phi+alpha+sigma*(1-alpha))
+Kappa=((1-alpha)/(1-alpha+alpha*epsilon))*(((1-theta)*(1-beta*theta))/theta)<span class="keyword">...</span>
+    *(sigma+(phi+alpha)/(1-alpha))
+Lamda_a=((sigma*(1-rho_a)+Phi_y)*(1-beta*rho_a)+Kappa*(Phi_pi-rho_a))^(-1);
+Lamda_v=((sigma*(1-rho_v)+Phi_y)*(1-beta*rho_v)+Kappa*(Phi_pi-rho_v))^(-1);
+
+psi_pia=Kappa*Lamda_a*sigma*psi_ya*(rho_a-1);
+psi_ytua=(1-beta*rho_a)*Lamda_a*sigma*psi_ya*(rho_a-1);
+psi_piv=-Kappa*Lamda_v;
+psi_ytuv=-(1-beta*rho_v)*Lamda_v;
+psi_rna=sigma*psi_ya*(rho_a-1);
+psi_ia=Lamda_a*(Phi_pi*Kappa+Phi_y*(1-beta*rho_a))*sigma*psi_ya*(rho_a-1);
+psi_iv=Lamda_v*(-rho_v*Kappa+Phi_y*(1-beta*rho_v));
+<span class="comment">%Define the coeffcient matrixes</span>
+Q=[ psi_piv psi_pia; psi_ytuv psi_ytua; 0 psi_rna ];
+S=[ psi_iv psi_ia ];
+</pre><pre class="codeoutput">
+psi_ya =
+
+     1
+
+
+Kappa =
+
+    0.1275
+
+</pre><pre class="codeinput"><span class="comment">%Problem 3.4)</span>
+clc
+[y,pi,i,r,QQ,SS]=newkeynesian(0,0,6,2/3,1.5,0.5);
+
+disp(<span class="string">'%%%%%%%%%%%%%%%%'</span>)
+disp(<span class="string">'%%%%%%%%%%%%%%%%'</span>)
+disp(<span class="string">'The parameters derived in the class are showed in Q &amp; S'</span>)
+disp(<span class="string">'The parameters calculated in toolkit are showed in QQ &amp; SS'</span>)
+disp(<span class="string">'Show if the parameters are correct'</span>)
+Q
+QQ
+S
+SS
+</pre><pre class="codeoutput">
+GNP_INDEX =
+
+     2
+
+OPTIONS.M: You will not receive warning messages immediately.          
+           To turn on immediate warnings, set DISPLAY_IMMEDIATELY = 1  
+           Warning messages are stored in the array "warnings"         
+Exogenous states z(t):
+monetaryshock
+technology   
+ 
+Endogenous states x(t):
+inflation    
+outputgap    
+natrinterest 
+ 
+All the roots are:
+    root         abs(root)   
+   1.0e+06 *
+
+         0         0
+         0         0
+         0         0
+    0.0000    0.0000
+    0.0000    0.0000
+    1.0000    1.0000
+
+The chosen roots are:
+    root         abs(root)   
+     0     0
+     0     0
+     0     0
+
+ 
+PP: Recursive equilibrium law of motion for x(t) on x(t-1):
+     0     0     0
+     0     0     0
+     0     0     0
+
+QQ: Recursive equilibrium law of motion for x(t) on z(t):
+   -0.2016   -0.0899
+   -0.7984   -0.0768
+         0   -0.1000
+
+ 
+Other endogenous variables y(t):
+nomiinterest 
+ 
+RR: Recursive equilibrium law of motion for y(t) on x(t-1):
+     0     0     0
+
+SS: Recursive equilibrium law of motion for y(t) on z(t):
+    0.2984   -0.1732
+
+ 
+Impulse responses to shocks...
+Impulse responses to deviation of state variables from steady state...
+=======================================================================
+Your messages: (You can turn me off with DISPLAY_AT_THE_END = 0)
+OPTIONS.M: You will not receive warning messages immediately.          
+           To turn on immediate warnings, set DISPLAY_IMMEDIATELY = 1  
+           Warning messages are stored in the array "warnings"         
+OPTIONS.M: There are lots of options to choose from.  Type help options
+           to get more information about them!                         
+OPTIONS.M: Note, that I will not calculate moments.                    
+           If you want to have them calculated, set DO_MOMENTS = 1     
+OPTIONS.M: Note, that I will not calculate simulations.                
+           If you want to have them calculated, set DO_SIMUL = 1       
+OPTIONS.M: Note, that I will not plot impulse responses.               
+           If you want to have them plotted, set DO_PLOTS = 1          
+OPTIONS.M: For imp.responses you can choose between joint-, sub-, and  
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+OPTIONS.M: Note, that I will not plot simulations.                     
+           If you want to have them plotted, set SIM_GRAPH=1           
+OPTIONS.M: For simulations you can choose between joint-, sub-, and    
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+OPTIONS.M: Note, that I will not plot spectral densities.              
+           If you want to have them plotted, set DO_HP_GRAPH =1        
+OPTIONS.M: For moments you can choose between joint-, sub-, and        
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+=======================================================================
+%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%
+The parameters derived in the class are showed in Q &amp; S
+The parameters calculated in toolkit are showed in QQ &amp; SS
+Show if the parameters are correct
+
+Q =
+
+   -0.2016   -0.0899
+   -0.7984   -0.0768
+         0   -0.1000
+
+
+QQ =
+
+   -0.2016   -0.0899
+   -0.7984   -0.0768
+         0   -0.1000
+
+
+S =
+
+    0.2984   -0.1732
+
+
+SS =
+
+    0.2984   -0.1732
+
+</pre><pre class="codeinput"><span class="comment">%Problem 3.4)</span>
+clc
+[y,pi,i,r,QQ,SS]=newkeynesian(sqrt(0.25),0,6,2/3,1.5,0.5);
+clf
+subplot(2,2,1)
+plot(y,<span class="string">'-o'</span>,<span class="string">'linewidth'</span>,2)
+axis([0,20,-0.45,0])
+title(<span class="string">'Output Gap'</span>)
+subplot(2,2,2)
+plot(pi,<span class="string">'-o'</span>,<span class="string">'linewidth'</span>,2)
+axis([0,20,-0.12,0])
+title(<span class="string">'Inflation'</span>)
+subplot(2,2,3)
+plot(i,<span class="string">'-o'</span>,<span class="string">'linewidth'</span>,2)
+axis([0,20,0,0.2])
+title(<span class="string">'Nominal Interest Rate'</span>)
+subplot(2,2,4)
+plot(r,<span class="string">'-o'</span>,<span class="string">'linewidth'</span>,2)
+axis([0,20,0,0.24])
+title(<span class="string">'Real Interest Rate'</span>)
+suptitle(<span class="string">'v_0=0.5'</span>)
+</pre><pre class="codeoutput">
+GNP_INDEX =
+
+     2
+
+OPTIONS.M: You will not receive warning messages immediately.          
+           To turn on immediate warnings, set DISPLAY_IMMEDIATELY = 1  
+           Warning messages are stored in the array "warnings"         
+Exogenous states z(t):
+monetaryshock
+technology   
+ 
+Endogenous states x(t):
+inflation    
+outputgap    
+natrinterest 
+ 
+All the roots are:
+    root         abs(root)   
+   1.0e+06 *
+
+         0         0
+         0         0
+         0         0
+    0.0000    0.0000
+    0.0000    0.0000
+    1.0000    1.0000
+
+The chosen roots are:
+    root         abs(root)   
+     0     0
+     0     0
+     0     0
+
+ 
+PP: Recursive equilibrium law of motion for x(t) on x(t-1):
+     0     0     0
+     0     0     0
+     0     0     0
+
+QQ: Recursive equilibrium law of motion for x(t) on z(t):
+   -0.2016   -0.0899
+   -0.7984   -0.0768
+         0   -0.1000
+
+ 
+Other endogenous variables y(t):
+nomiinterest 
+ 
+RR: Recursive equilibrium law of motion for y(t) on x(t-1):
+     0     0     0
+
+SS: Recursive equilibrium law of motion for y(t) on z(t):
+    0.2984   -0.1732
+
+ 
+Impulse responses to shocks...
+Impulse responses to deviation of state variables from steady state...
+=======================================================================
+Your messages: (You can turn me off with DISPLAY_AT_THE_END = 0)
+OPTIONS.M: You will not receive warning messages immediately.          
+           To turn on immediate warnings, set DISPLAY_IMMEDIATELY = 1  
+           Warning messages are stored in the array "warnings"         
+OPTIONS.M: There are lots of options to choose from.  Type help options
+           to get more information about them!                         
+OPTIONS.M: Note, that I will not calculate moments.                    
+           If you want to have them calculated, set DO_MOMENTS = 1     
+OPTIONS.M: Note, that I will not calculate simulations.                
+           If you want to have them calculated, set DO_SIMUL = 1       
+OPTIONS.M: Note, that I will not plot impulse responses.               
+           If you want to have them plotted, set DO_PLOTS = 1          
+OPTIONS.M: For imp.responses you can choose between joint-, sub-, and  
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+OPTIONS.M: Note, that I will not plot simulations.                     
+           If you want to have them plotted, set SIM_GRAPH=1           
+OPTIONS.M: For simulations you can choose between joint-, sub-, and    
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+OPTIONS.M: Note, that I will not plot spectral densities.              
+           If you want to have them plotted, set DO_HP_GRAPH =1        
+OPTIONS.M: For moments you can choose between joint-, sub-, and        
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+=======================================================================
+</pre><img vspace="5" hspace="5" src="homework5_01.png" alt=""> <pre class="codeinput"><span class="comment">%Problem 3.5)</span>
+clc
+[y,pi,i,r,QQ,SS]=newkeynesian(0,sqrt(0.712),6,2/3,1.5,0.5);
+clf
+subplot(2,2,1)
+plot(y,<span class="string">'-o'</span>,<span class="string">'linewidth'</span>,2)
+axis([0,20,-0.08,0])
+title(<span class="string">'Output Gap'</span>)
+subplot(2,2,2)
+plot(pi,<span class="string">'-o'</span>,<span class="string">'linewidth'</span>,2)
+title(<span class="string">'Inflation'</span>)
+axis([0,20,-0.08,0])
+subplot(2,2,3)
+plot(i,<span class="string">'-o'</span>,<span class="string">'linewidth'</span>,2)
+axis([0,20,-0.15,0])
+title(<span class="string">'Nominal Interest Rate'</span>)
+subplot(2,2,4)
+plot(r,<span class="string">'-o'</span>,<span class="string">'linewidth'</span>,2)
+axis([0,20,-0.08,0])
+title(<span class="string">'Real Interest Rate'</span>)
+suptitle(<span class="string">'a_0=sqrt(0.712)'</span>)
+</pre><pre class="codeoutput">
+GNP_INDEX =
+
+     2
+
+OPTIONS.M: You will not receive warning messages immediately.          
+           To turn on immediate warnings, set DISPLAY_IMMEDIATELY = 1  
+           Warning messages are stored in the array "warnings"         
+Exogenous states z(t):
+monetaryshock
+technology   
+ 
+Endogenous states x(t):
+inflation    
+outputgap    
+natrinterest 
+ 
+All the roots are:
+    root         abs(root)   
+   1.0e+06 *
+
+         0         0
+         0         0
+         0         0
+    0.0000    0.0000
+    0.0000    0.0000
+    1.0000    1.0000
+
+The chosen roots are:
+    root         abs(root)   
+     0     0
+     0     0
+     0     0
+
+ 
+PP: Recursive equilibrium law of motion for x(t) on x(t-1):
+     0     0     0
+     0     0     0
+     0     0     0
+
+QQ: Recursive equilibrium law of motion for x(t) on z(t):
+   -0.2016   -0.0899
+   -0.7984   -0.0768
+         0   -0.1000
+
+ 
+Other endogenous variables y(t):
+nomiinterest 
+ 
+RR: Recursive equilibrium law of motion for y(t) on x(t-1):
+     0     0     0
+
+SS: Recursive equilibrium law of motion for y(t) on z(t):
+    0.2984   -0.1732
+
+ 
+Impulse responses to shocks...
+Impulse responses to deviation of state variables from steady state...
+=======================================================================
+Your messages: (You can turn me off with DISPLAY_AT_THE_END = 0)
+OPTIONS.M: You will not receive warning messages immediately.          
+           To turn on immediate warnings, set DISPLAY_IMMEDIATELY = 1  
+           Warning messages are stored in the array "warnings"         
+OPTIONS.M: There are lots of options to choose from.  Type help options
+           to get more information about them!                         
+OPTIONS.M: Note, that I will not calculate moments.                    
+           If you want to have them calculated, set DO_MOMENTS = 1     
+OPTIONS.M: Note, that I will not calculate simulations.                
+           If you want to have them calculated, set DO_SIMUL = 1       
+OPTIONS.M: Note, that I will not plot impulse responses.               
+           If you want to have them plotted, set DO_PLOTS = 1          
+OPTIONS.M: For imp.responses you can choose between joint-, sub-, and  
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+OPTIONS.M: Note, that I will not plot simulations.                     
+           If you want to have them plotted, set SIM_GRAPH=1           
+OPTIONS.M: For simulations you can choose between joint-, sub-, and    
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+OPTIONS.M: Note, that I will not plot spectral densities.              
+           If you want to have them plotted, set DO_HP_GRAPH =1        
+OPTIONS.M: For moments you can choose between joint-, sub-, and        
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+=======================================================================
+</pre><img vspace="5" hspace="5" src="homework5_02.png" alt=""> <pre class="codeinput"><span class="comment">%Problem 3.6)</span>
+clc
+[y1,pi1,i1,r1]=newkeynesian(sqrt(0.25),0,60,2/3,1.5,0.5);
+[y2,pi2,i2,r2]=newkeynesian(0,sqrt(0.712),60,2/3,1.5,0.5);
+
+disp(<span class="string">'Response to monetary shock'</span>)
+disp(<span class="string">'Hit any key when ready...'</span>)
+pause
+
+clf
+subplot(2,2,1)
+plot(y1,<span class="string">'-o'</span>,<span class="string">'linewidth'</span>,2)
+axis([0,20,-0.6,0])
+title(<span class="string">'Output Gap'</span>)
+subplot(2,2,2)
+plot(pi1,<span class="string">'-o'</span>,<span class="string">'linewidth'</span>,2)
+axis([0,20,-0.02,0])
+title(<span class="string">'Inflation'</span>)
+subplot(2,2,3)
+plot(i1,<span class="string">'-o'</span>,<span class="string">'linewidth'</span>,2)
+axis([0,20,0,0.3])
+title(<span class="string">'Nominal Interest Rate'</span>)
+subplot(2,2,4)
+plot(r1,<span class="string">'-o'</span>,<span class="string">'linewidth'</span>,2)
+axis([0,20,0,0.3])
+title(<span class="string">'Real Interest Rate'</span>)
+suptitle(<span class="string">'\epsilon=60 with monetary shock'</span>)
+
+disp(<span class="string">'Response to technology shock'</span>)
+disp(<span class="string">'Hit any key when ready...'</span>)
+pause
+
+clf
+subplot(2,2,1)
+plot(y2,<span class="string">'-o'</span>,<span class="string">'linewidth'</span>,2)
+axis([0,20,-0.15,0])
+title(<span class="string">'Output Gap'</span>)
+subplot(2,2,2)
+plot(pi2,<span class="string">'-o'</span>,<span class="string">'linewidth'</span>,2)
+axis([0,20,-0.02,0])
+title(<span class="string">'Inflation'</span>)
+subplot(2,2,3)
+plot(i2,<span class="string">'-o'</span>,<span class="string">'linewidth'</span>,2)
+axis([0,20,-0.1,0])
+title(<span class="string">'Nominal Interest Rate'</span>)
+subplot(2,2,4)
+plot(r2,<span class="string">'-o'</span>,<span class="string">'linewidth'</span>,2)
+axis([0,20,-0.1,0])
+title(<span class="string">'Real Interest Rate'</span>)
+suptitle(<span class="string">'\epsilon=60 with technology shock'</span>)
+</pre><pre class="codeoutput">
+GNP_INDEX =
+
+     2
+
+OPTIONS.M: You will not receive warning messages immediately.          
+           To turn on immediate warnings, set DISPLAY_IMMEDIATELY = 1  
+           Warning messages are stored in the array "warnings"         
+Exogenous states z(t):
+monetaryshock
+technology   
+ 
+Endogenous states x(t):
+inflation    
+outputgap    
+natrinterest 
+ 
+All the roots are:
+    root         abs(root)   
+   1.0e+06 *
+
+         0         0
+         0         0
+         0         0
+    0.0000    0.0000
+    0.0000    0.0000
+    1.0000    1.0000
+
+The chosen roots are:
+    root         abs(root)   
+     0     0
+     0     0
+     0     0
+
+ 
+PP: Recursive equilibrium law of motion for x(t) on x(t-1):
+     0     0     0
+     0     0     0
+     0     0     0
+
+QQ: Recursive equilibrium law of motion for x(t) on z(t):
+   -0.0315   -0.0219
+   -0.9685   -0.1448
+         0   -0.1000
+
+ 
+Other endogenous variables y(t):
+nomiinterest 
+ 
+RR: Recursive equilibrium law of motion for y(t) on x(t-1):
+     0     0     0
+
+SS: Recursive equilibrium law of motion for y(t) on z(t):
+    0.4685   -0.1052
+
+ 
+Impulse responses to shocks...
+Impulse responses to deviation of state variables from steady state...
+=======================================================================
+Your messages: (You can turn me off with DISPLAY_AT_THE_END = 0)
+OPTIONS.M: You will not receive warning messages immediately.          
+           To turn on immediate warnings, set DISPLAY_IMMEDIATELY = 1  
+           Warning messages are stored in the array "warnings"         
+OPTIONS.M: There are lots of options to choose from.  Type help options
+           to get more information about them!                         
+OPTIONS.M: Note, that I will not calculate moments.                    
+           If you want to have them calculated, set DO_MOMENTS = 1     
+OPTIONS.M: Note, that I will not calculate simulations.                
+           If you want to have them calculated, set DO_SIMUL = 1       
+OPTIONS.M: Note, that I will not plot impulse responses.               
+           If you want to have them plotted, set DO_PLOTS = 1          
+OPTIONS.M: For imp.responses you can choose between joint-, sub-, and  
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+OPTIONS.M: Note, that I will not plot simulations.                     
+           If you want to have them plotted, set SIM_GRAPH=1           
+OPTIONS.M: For simulations you can choose between joint-, sub-, and    
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+OPTIONS.M: Note, that I will not plot spectral densities.              
+           If you want to have them plotted, set DO_HP_GRAPH =1        
+OPTIONS.M: For moments you can choose between joint-, sub-, and        
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+=======================================================================
+
+GNP_INDEX =
+
+     2
+
+OPTIONS.M: You will not receive warning messages immediately.          
+           To turn on immediate warnings, set DISPLAY_IMMEDIATELY = 1  
+           Warning messages are stored in the array "warnings"         
+Exogenous states z(t):
+monetaryshock
+technology   
+ 
+Endogenous states x(t):
+inflation    
+outputgap    
+natrinterest 
+ 
+All the roots are:
+    root         abs(root)   
+   1.0e+06 *
+
+         0         0
+         0         0
+         0         0
+    0.0000    0.0000
+    0.0000    0.0000
+    1.0000    1.0000
+
+The chosen roots are:
+    root         abs(root)   
+     0     0
+     0     0
+     0     0
+
+ 
+PP: Recursive equilibrium law of motion for x(t) on x(t-1):
+     0     0     0
+     0     0     0
+     0     0     0
+
+QQ: Recursive equilibrium law of motion for x(t) on z(t):
+   -0.0315   -0.0219
+   -0.9685   -0.1448
+         0   -0.1000
+
+ 
+Other endogenous variables y(t):
+nomiinterest 
+ 
+RR: Recursive equilibrium law of motion for y(t) on x(t-1):
+     0     0     0
+
+SS: Recursive equilibrium law of motion for y(t) on z(t):
+    0.4685   -0.1052
+
+ 
+Impulse responses to shocks...
+Impulse responses to deviation of state variables from steady state...
+=======================================================================
+Your messages: (You can turn me off with DISPLAY_AT_THE_END = 0)
+OPTIONS.M: You will not receive warning messages immediately.          
+           To turn on immediate warnings, set DISPLAY_IMMEDIATELY = 1  
+           Warning messages are stored in the array "warnings"         
+OPTIONS.M: There are lots of options to choose from.  Type help options
+           to get more information about them!                         
+OPTIONS.M: Note, that I will not calculate moments.                    
+           If you want to have them calculated, set DO_MOMENTS = 1     
+OPTIONS.M: Note, that I will not calculate simulations.                
+           If you want to have them calculated, set DO_SIMUL = 1       
+OPTIONS.M: Note, that I will not plot impulse responses.               
+           If you want to have them plotted, set DO_PLOTS = 1          
+OPTIONS.M: For imp.responses you can choose between joint-, sub-, and  
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+OPTIONS.M: Note, that I will not plot simulations.                     
+           If you want to have them plotted, set SIM_GRAPH=1           
+OPTIONS.M: For simulations you can choose between joint-, sub-, and    
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+OPTIONS.M: Note, that I will not plot spectral densities.              
+           If you want to have them plotted, set DO_HP_GRAPH =1        
+OPTIONS.M: For moments you can choose between joint-, sub-, and        
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+=======================================================================
+Response to monetary shock
+Hit any key when ready...
+Response to technology shock
+Hit any key when ready...
+</pre><img vspace="5" hspace="5" src="homework5_03.png" alt=""> <pre class="codeinput"><span class="comment">%Problem 3.7)</span>
+clc
+[y1,pi1,i1,r1]=newkeynesian(sqrt(0.25),0,6,eps,1.5,0.5);
+[y2,pi2,i2,r2]=newkeynesian(0,sqrt(0.712),6,eps,1.5,0.5);
+<span class="comment">%eps is a constant value equals to 2.2204e-16</span>
+disp(<span class="string">'Response to monetary shock'</span>)
+disp(<span class="string">'Hit any key when ready...'</span>)
+pause
+
+clf
+subplot(2,2,1)
+plot(y1,<span class="string">'-o'</span>,<span class="string">'linewidth'</span>,2)
+axis([0,20,-0.5,0])
+title(<span class="string">'Output Gap'</span>)
+subplot(2,2,2)
+plot(pi1,<span class="string">'-o'</span>,<span class="string">'linewidth'</span>,2)
+axis([0,20,-0.5,0])
+title(<span class="string">'Inflation'</span>)
+subplot(2,2,3)
+plot(i1,<span class="string">'-o'</span>,<span class="string">'linewidth'</span>,2)
+axis([0,20,-0.25,0])
+title(<span class="string">'Nominal Interest Rate'</span>)
+subplot(2,2,4)
+plot(r1,<span class="string">'-o'</span>,<span class="string">'linewidth'</span>,2)
+axis([0,20,-0.5,0.5])
+title(<span class="string">'Real Interest Rate'</span>)
+suptitle(<span class="string">'\theta=0 with monetary shock'</span>)
+
+disp(<span class="string">'Response to technology shock'</span>)
+disp(<span class="string">'Hit any key when ready...'</span>)
+pause
+
+clf
+subplot(2,2,1)
+plot(y2,<span class="string">'-o'</span>,<span class="string">'linewidth'</span>,2)
+axis([0,20,-0.15,0])
+title(<span class="string">'Output Gap'</span>)
+subplot(2,2,2)
+plot(pi2,<span class="string">'-o'</span>,<span class="string">'linewidth'</span>,2)
+axis([0,20,-0.15,0])
+title(<span class="string">'Inflation'</span>)
+subplot(2,2,3)
+plot(i2,<span class="string">'-o'</span>,<span class="string">'linewidth'</span>,2)
+axis([0,20,-0.25,0])
+title(<span class="string">'Nominal Interest Rate'</span>)
+subplot(2,2,4)
+plot(r2,<span class="string">'-o'</span>,<span class="string">'linewidth'</span>,2)
+axis([0,20,-0.1,0])
+title(<span class="string">'Real Interest Rate'</span>)
+suptitle(<span class="string">'\theta=0 with technology shock'</span>)
+</pre><pre class="codeoutput">
+GNP_INDEX =
+
+     2
+
+OPTIONS.M: You will not receive warning messages immediately.          
+           To turn on immediate warnings, set DISPLAY_IMMEDIATELY = 1  
+           Warning messages are stored in the array "warnings"         
+
+message =
+
+SOLVE.M: Warning! V is not invertible.  However, you have set          
+         IGNORE_VV_SING = 1, and thus, since you have told me to       
+         ignore this, I will proceed.  Keep your fingers crossed...    
+
+&#35686;&#21578;: &#30697;&#38453;&#25509;&#36817;&#22855;&#24322;&#20540;&#65292;&#25110;&#32773;&#32553;&#25918;&#38169;&#35823;&#12290;&#32467;&#26524;&#21487;&#33021;&#19981;&#20934;&#30830;&#12290;RCOND =
+5.730183e-17&#12290; 
+Exogenous states z(t):
+monetaryshock
+technology   
+ 
+Endogenous states x(t):
+inflation    
+outputgap    
+natrinterest 
+ 
+All the roots are:
+    root         abs(root)   
+   1.0e+15 *
+
+         0         0
+         0         0
+         0         0
+    0.0000    0.0000
+    0.0000    0.0000
+    3.4118    3.4118
+
+The chosen roots are:
+    root         abs(root)   
+     0     0
+     0     0
+     0     0
+
+ 
+PP: Recursive equilibrium law of motion for x(t) on x(t-1):
+     0     0     0
+     0     0     0
+     0     0     0
+
+QQ: Recursive equilibrium law of motion for x(t) on z(t):
+   -1.0000   -0.1667
+   -0.0000   -0.0000
+         0   -0.1000
+
+ 
+Other endogenous variables y(t):
+nomiinterest 
+ 
+RR: Recursive equilibrium law of motion for y(t) on x(t-1):
+     0     0     0
+
+SS: Recursive equilibrium law of motion for y(t) on z(t):
+   -0.5000   -0.2500
+
+ 
+Impulse responses to shocks...
+Impulse responses to deviation of state variables from steady state...
+=======================================================================
+Your messages: (You can turn me off with DISPLAY_AT_THE_END = 0)
+OPTIONS.M: You will not receive warning messages immediately.          
+           To turn on immediate warnings, set DISPLAY_IMMEDIATELY = 1  
+           Warning messages are stored in the array "warnings"         
+OPTIONS.M: There are lots of options to choose from.  Type help options
+           to get more information about them!                         
+OPTIONS.M: Note, that I will not calculate moments.                    
+           If you want to have them calculated, set DO_MOMENTS = 1     
+OPTIONS.M: Note, that I will not calculate simulations.                
+           If you want to have them calculated, set DO_SIMUL = 1       
+OPTIONS.M: Note, that I will not plot impulse responses.               
+           If you want to have them plotted, set DO_PLOTS = 1          
+OPTIONS.M: For imp.responses you can choose between joint-, sub-, and  
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+OPTIONS.M: Note, that I will not plot simulations.                     
+           If you want to have them plotted, set SIM_GRAPH=1           
+OPTIONS.M: For simulations you can choose between joint-, sub-, and    
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+OPTIONS.M: Note, that I will not plot spectral densities.              
+           If you want to have them plotted, set DO_HP_GRAPH =1        
+OPTIONS.M: For moments you can choose between joint-, sub-, and        
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+SOLVE.M: Warning! V is not invertible.  However, you have set          
+         IGNORE_VV_SING = 1, and thus, since you have told me to       
+         ignore this, I will proceed.  Keep your fingers crossed...    
+=======================================================================
+
+GNP_INDEX =
+
+     2
+
+OPTIONS.M: You will not receive warning messages immediately.          
+           To turn on immediate warnings, set DISPLAY_IMMEDIATELY = 1  
+           Warning messages are stored in the array "warnings"         
+
+message =
+
+SOLVE.M: Warning! V is not invertible.  However, you have set          
+         IGNORE_VV_SING = 1, and thus, since you have told me to       
+         ignore this, I will proceed.  Keep your fingers crossed...    
+
+&#35686;&#21578;: &#30697;&#38453;&#25509;&#36817;&#22855;&#24322;&#20540;&#65292;&#25110;&#32773;&#32553;&#25918;&#38169;&#35823;&#12290;&#32467;&#26524;&#21487;&#33021;&#19981;&#20934;&#30830;&#12290;RCOND =
+5.730183e-17&#12290; 
+Exogenous states z(t):
+monetaryshock
+technology   
+ 
+Endogenous states x(t):
+inflation    
+outputgap    
+natrinterest 
+ 
+All the roots are:
+    root         abs(root)   
+   1.0e+15 *
+
+         0         0
+         0         0
+         0         0
+    0.0000    0.0000
+    0.0000    0.0000
+    3.4118    3.4118
+
+The chosen roots are:
+    root         abs(root)   
+     0     0
+     0     0
+     0     0
+
+ 
+PP: Recursive equilibrium law of motion for x(t) on x(t-1):
+     0     0     0
+     0     0     0
+     0     0     0
+
+QQ: Recursive equilibrium law of motion for x(t) on z(t):
+   -1.0000   -0.1667
+   -0.0000   -0.0000
+         0   -0.1000
+
+ 
+Other endogenous variables y(t):
+nomiinterest 
+ 
+RR: Recursive equilibrium law of motion for y(t) on x(t-1):
+     0     0     0
+
+SS: Recursive equilibrium law of motion for y(t) on z(t):
+   -0.5000   -0.2500
+
+ 
+Impulse responses to shocks...
+Impulse responses to deviation of state variables from steady state...
+=======================================================================
+Your messages: (You can turn me off with DISPLAY_AT_THE_END = 0)
+OPTIONS.M: You will not receive warning messages immediately.          
+           To turn on immediate warnings, set DISPLAY_IMMEDIATELY = 1  
+           Warning messages are stored in the array "warnings"         
+OPTIONS.M: There are lots of options to choose from.  Type help options
+           to get more information about them!                         
+OPTIONS.M: Note, that I will not calculate moments.                    
+           If you want to have them calculated, set DO_MOMENTS = 1     
+OPTIONS.M: Note, that I will not calculate simulations.                
+           If you want to have them calculated, set DO_SIMUL = 1       
+OPTIONS.M: Note, that I will not plot impulse responses.               
+           If you want to have them plotted, set DO_PLOTS = 1          
+OPTIONS.M: For imp.responses you can choose between joint-, sub-, and  
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+OPTIONS.M: Note, that I will not plot simulations.                     
+           If you want to have them plotted, set SIM_GRAPH=1           
+OPTIONS.M: For simulations you can choose between joint-, sub-, and    
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+OPTIONS.M: Note, that I will not plot spectral densities.              
+           If you want to have them plotted, set DO_HP_GRAPH =1        
+OPTIONS.M: For moments you can choose between joint-, sub-, and        
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+SOLVE.M: Warning! V is not invertible.  However, you have set          
+         IGNORE_VV_SING = 1, and thus, since you have told me to       
+         ignore this, I will proceed.  Keep your fingers crossed...    
+=======================================================================
+Response to monetary shock
+Hit any key when ready...
+Response to technology shock
+Hit any key when ready...
+</pre><img vspace="5" hspace="5" src="homework5_04.png" alt=""> <pre class="codeinput"><span class="comment">%Problem 3.8),part1</span>
+clc
+[y1,pi1,i1,r1]=newkeynesian(sqrt(0.25),0,6,2/3,0.9,0.5);
+[y2,pi2,i2,r2]=newkeynesian(0,sqrt(0.712),6,2/3,0.9,0.5);
+
+disp(<span class="string">'Response to monetary shock'</span>)
+disp(<span class="string">'Hit any key when ready...'</span>)
+pause
+
+clf
+subplot(2,2,1)
+plot(y1,<span class="string">'-o'</span>,<span class="string">'linewidth'</span>,2)
+axis([0,20,-0.5,0])
+title(<span class="string">'Output Gap'</span>)
+subplot(2,2,2)
+plot(pi1,<span class="string">'-o'</span>,<span class="string">'linewidth'</span>,2)
+axis([0,20,-0.12,0])
+title(<span class="string">'Inflation'</span>)
+subplot(2,2,3)
+plot(i1,<span class="string">'-o'</span>,<span class="string">'linewidth'</span>,2)
+axis([0,20,0,0.2])
+title(<span class="string">'Nominal Interest Rate'</span>)
+subplot(2,2,4)
+plot(r1,<span class="string">'-o'</span>,<span class="string">'linewidth'</span>,2)
+axis([0,20,0,0.25])
+title(<span class="string">'Real Interest Rate'</span>)
+suptitle(<span class="string">'\phi_\pi=0.9 with monetary shock'</span>)
+
+disp(<span class="string">'Response to technology shock'</span>)
+disp(<span class="string">'Hit any key when ready...'</span>)
+pause
+
+clf
+subplot(2,2,1)
+plot(y2,<span class="string">'-o'</span>,<span class="string">'linewidth'</span>,2)
+axis([0,20,-0.15,0])
+title(<span class="string">'Output Gap'</span>)
+subplot(2,2,2)
+plot(pi2,<span class="string">'-o'</span>,<span class="string">'linewidth'</span>,2)
+axis([0,20,-0.15,0])
+title(<span class="string">'Inflation'</span>)
+subplot(2,2,3)
+plot(i2,<span class="string">'-o'</span>,<span class="string">'linewidth'</span>,2)
+axis([0,20,-0.21,0])
+title(<span class="string">'Nominal Interest Rate'</span>)
+subplot(2,2,4)
+plot(r2,<span class="string">'-o'</span>,<span class="string">'linewidth'</span>,2)
+axis([0,20,-0.1,0])
+title(<span class="string">'Real Interest Rate'</span>)
+suptitle(<span class="string">'\phi_\pi=0.9 with technology shock'</span>)
+</pre><pre class="codeoutput">
+GNP_INDEX =
+
+     2
+
+OPTIONS.M: You will not receive warning messages immediately.          
+           To turn on immediate warnings, set DISPLAY_IMMEDIATELY = 1  
+           Warning messages are stored in the array "warnings"         
+Exogenous states z(t):
+monetaryshock
+technology   
+ 
+Endogenous states x(t):
+inflation    
+outputgap    
+natrinterest 
+ 
+All the roots are:
+    root         abs(root)   
+   1.0e+06 *
+
+         0         0
+         0         0
+         0         0
+    0.0000    0.0000
+    0.0000    0.0000
+    1.0000    1.0000
+
+The chosen roots are:
+    root         abs(root)   
+     0     0
+     0     0
+     0     0
+
+ 
+PP: Recursive equilibrium law of motion for x(t) on x(t-1):
+     0     0     0
+     0     0     0
+     0     0     0
+
+QQ: Recursive equilibrium law of motion for x(t) on z(t):
+   -0.2293   -0.1950
+   -0.9083   -0.1667
+         0   -0.1000
+
+ 
+Other endogenous variables y(t):
+nomiinterest 
+ 
+RR: Recursive equilibrium law of motion for y(t) on x(t-1):
+     0     0     0
+
+SS: Recursive equilibrium law of motion for y(t) on z(t):
+    0.3395   -0.2588
+
+ 
+Impulse responses to shocks...
+Impulse responses to deviation of state variables from steady state...
+=======================================================================
+Your messages: (You can turn me off with DISPLAY_AT_THE_END = 0)
+OPTIONS.M: You will not receive warning messages immediately.          
+           To turn on immediate warnings, set DISPLAY_IMMEDIATELY = 1  
+           Warning messages are stored in the array "warnings"         
+OPTIONS.M: There are lots of options to choose from.  Type help options
+           to get more information about them!                         
+OPTIONS.M: Note, that I will not calculate moments.                    
+           If you want to have them calculated, set DO_MOMENTS = 1     
+OPTIONS.M: Note, that I will not calculate simulations.                
+           If you want to have them calculated, set DO_SIMUL = 1       
+OPTIONS.M: Note, that I will not plot impulse responses.               
+           If you want to have them plotted, set DO_PLOTS = 1          
+OPTIONS.M: For imp.responses you can choose between joint-, sub-, and  
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+OPTIONS.M: Note, that I will not plot simulations.                     
+           If you want to have them plotted, set SIM_GRAPH=1           
+OPTIONS.M: For simulations you can choose between joint-, sub-, and    
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+OPTIONS.M: Note, that I will not plot spectral densities.              
+           If you want to have them plotted, set DO_HP_GRAPH =1        
+OPTIONS.M: For moments you can choose between joint-, sub-, and        
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+=======================================================================
+
+GNP_INDEX =
+
+     2
+
+OPTIONS.M: You will not receive warning messages immediately.          
+           To turn on immediate warnings, set DISPLAY_IMMEDIATELY = 1  
+           Warning messages are stored in the array "warnings"         
+Exogenous states z(t):
+monetaryshock
+technology   
+ 
+Endogenous states x(t):
+inflation    
+outputgap    
+natrinterest 
+ 
+All the roots are:
+    root         abs(root)   
+   1.0e+06 *
+
+         0         0
+         0         0
+         0         0
+    0.0000    0.0000
+    0.0000    0.0000
+    1.0000    1.0000
+
+The chosen roots are:
+    root         abs(root)   
+     0     0
+     0     0
+     0     0
+
+ 
+PP: Recursive equilibrium law of motion for x(t) on x(t-1):
+     0     0     0
+     0     0     0
+     0     0     0
+
+QQ: Recursive equilibrium law of motion for x(t) on z(t):
+   -0.2293   -0.1950
+   -0.9083   -0.1667
+         0   -0.1000
+
+ 
+Other endogenous variables y(t):
+nomiinterest 
+ 
+RR: Recursive equilibrium law of motion for y(t) on x(t-1):
+     0     0     0
+
+SS: Recursive equilibrium law of motion for y(t) on z(t):
+    0.3395   -0.2588
+
+ 
+Impulse responses to shocks...
+Impulse responses to deviation of state variables from steady state...
+=======================================================================
+Your messages: (You can turn me off with DISPLAY_AT_THE_END = 0)
+OPTIONS.M: You will not receive warning messages immediately.          
+           To turn on immediate warnings, set DISPLAY_IMMEDIATELY = 1  
+           Warning messages are stored in the array "warnings"         
+OPTIONS.M: There are lots of options to choose from.  Type help options
+           to get more information about them!                         
+OPTIONS.M: Note, that I will not calculate moments.                    
+           If you want to have them calculated, set DO_MOMENTS = 1     
+OPTIONS.M: Note, that I will not calculate simulations.                
+           If you want to have them calculated, set DO_SIMUL = 1       
+OPTIONS.M: Note, that I will not plot impulse responses.               
+           If you want to have them plotted, set DO_PLOTS = 1          
+OPTIONS.M: For imp.responses you can choose between joint-, sub-, and  
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+OPTIONS.M: Note, that I will not plot simulations.                     
+           If you want to have them plotted, set SIM_GRAPH=1           
+OPTIONS.M: For simulations you can choose between joint-, sub-, and    
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+OPTIONS.M: Note, that I will not plot spectral densities.              
+           If you want to have them plotted, set DO_HP_GRAPH =1        
+OPTIONS.M: For moments you can choose between joint-, sub-, and        
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+=======================================================================
+Response to monetary shock
+Hit any key when ready...
+Response to technology shock
+Hit any key when ready...
+</pre><img vspace="5" hspace="5" src="homework5_05.png" alt=""> <pre class="codeinput"><span class="comment">%Problem 3.8),part2</span>
+clc
+[y1,pi1,i1,r1]=newkeynesian(sqrt(0.25),0,6,2/3,10,0.5);
+[y2,pi2,i2,r2]=newkeynesian(0,sqrt(0.712),6,2/3,10,0.5);
+
+disp(<span class="string">'Response to monetary shock'</span>)
+disp(<span class="string">'Hit any key when ready...'</span>)
+pause
+
+clf
+subplot(2,2,1)
+plot(y1,<span class="string">'-o'</span>,<span class="string">'linewidth'</span>,2)
+axis([0,20,-0.2,0])
+title(<span class="string">'Output Gap'</span>)
+subplot(2,2,2)
+plot(pi1,<span class="string">'-o'</span>,<span class="string">'linewidth'</span>,2)
+title(<span class="string">'Inflation'</span>)
+subplot(2,2,3)
+plot(i1,<span class="string">'-o'</span>,<span class="string">'linewidth'</span>,2)
+axis([0,20,0,0.1])
+title(<span class="string">'Nominal Interest Rate'</span>)
+subplot(2,2,4)
+plot(r1,<span class="string">'-o'</span>,<span class="string">'linewidth'</span>,2)
+axis([0,20,-0,0.1])
+title(<span class="string">'Real Interest Rate'</span>)
+suptitle(<span class="string">'\phi_\pi=10 with monetary shock'</span>)
+
+disp(<span class="string">'Response to technology shock'</span>)
+disp(<span class="string">'Hit any key when ready...'</span>)
+pause
+
+clf
+subplot(2,2,1)
+plot(y2,<span class="string">'-o'</span>,<span class="string">'linewidth'</span>,2)
+axis([0,20,-10e-3,0])
+title(<span class="string">'Output Gap'</span>)
+subplot(2,2,2)
+plot(pi2,<span class="string">'-o'</span>,<span class="string">'linewidth'</span>,2)
+axis([0,20,-10e-3,0])
+title(<span class="string">'Inflation'</span>)
+subplot(2,2,3)
+plot(i2,<span class="string">'-o'</span>,<span class="string">'linewidth'</span>,2)
+axis([0,20,-0.1,0])
+title(<span class="string">'Nominal Interest Rate'</span>)
+subplot(2,2,4)
+plot(r2,<span class="string">'-o'</span>,<span class="string">'linewidth'</span>,2)
+axis([0,20,-0.1,0])
+title(<span class="string">'Real Interest Rate'</span>)
+suptitle(<span class="string">'\phi_\pi=10 with technology shock'</span>)
+</pre><pre class="codeoutput">
+GNP_INDEX =
+
+     2
+
+OPTIONS.M: You will not receive warning messages immediately.          
+           To turn on immediate warnings, set DISPLAY_IMMEDIATELY = 1  
+           Warning messages are stored in the array "warnings"         
+Exogenous states z(t):
+monetaryshock
+technology   
+ 
+Endogenous states x(t):
+inflation    
+outputgap    
+natrinterest 
+ 
+All the roots are:
+    root         abs(root)   
+   1.0e+06 *
+
+   0.0000 + 0.0000i   0.0000 + 0.0000i
+   0.0000 + 0.0000i   0.0000 + 0.0000i
+   0.0000 + 0.0000i   0.0000 + 0.0000i
+   0.0000 - 0.0000i   0.0000 + 0.0000i
+   0.0000 + 0.0000i   0.0000 + 0.0000i
+   1.0000 + 0.0000i   1.0000 + 0.0000i
+
+The chosen roots are:
+    root         abs(root)   
+     0     0
+     0     0
+     0     0
+
+ 
+PP: Recursive equilibrium law of motion for x(t) on x(t-1):
+     0     0     0
+     0     0     0
+     0     0     0
+
+QQ: Recursive equilibrium law of motion for x(t) on z(t):
+   -0.0743   -0.0104
+   -0.2942   -0.0089
+         0   -0.1000
+
+ 
+Other endogenous variables y(t):
+nomiinterest 
+ 
+RR: Recursive equilibrium law of motion for y(t) on x(t-1):
+     0     0     0
+
+SS: Recursive equilibrium law of motion for y(t) on z(t):
+    0.1100   -0.1085
+
+ 
+Impulse responses to shocks...
+Impulse responses to deviation of state variables from steady state...
+=======================================================================
+Your messages: (You can turn me off with DISPLAY_AT_THE_END = 0)
+OPTIONS.M: You will not receive warning messages immediately.          
+           To turn on immediate warnings, set DISPLAY_IMMEDIATELY = 1  
+           Warning messages are stored in the array "warnings"         
+OPTIONS.M: There are lots of options to choose from.  Type help options
+           to get more information about them!                         
+OPTIONS.M: Note, that I will not calculate moments.                    
+           If you want to have them calculated, set DO_MOMENTS = 1     
+OPTIONS.M: Note, that I will not calculate simulations.                
+           If you want to have them calculated, set DO_SIMUL = 1       
+OPTIONS.M: Note, that I will not plot impulse responses.               
+           If you want to have them plotted, set DO_PLOTS = 1          
+OPTIONS.M: For imp.responses you can choose between joint-, sub-, and  
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+OPTIONS.M: Note, that I will not plot simulations.                     
+           If you want to have them plotted, set SIM_GRAPH=1           
+OPTIONS.M: For simulations you can choose between joint-, sub-, and    
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+OPTIONS.M: Note, that I will not plot spectral densities.              
+           If you want to have them plotted, set DO_HP_GRAPH =1        
+OPTIONS.M: For moments you can choose between joint-, sub-, and        
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+=======================================================================
+
+GNP_INDEX =
+
+     2
+
+OPTIONS.M: You will not receive warning messages immediately.          
+           To turn on immediate warnings, set DISPLAY_IMMEDIATELY = 1  
+           Warning messages are stored in the array "warnings"         
+Exogenous states z(t):
+monetaryshock
+technology   
+ 
+Endogenous states x(t):
+inflation    
+outputgap    
+natrinterest 
+ 
+All the roots are:
+    root         abs(root)   
+   1.0e+06 *
+
+   0.0000 + 0.0000i   0.0000 + 0.0000i
+   0.0000 + 0.0000i   0.0000 + 0.0000i
+   0.0000 + 0.0000i   0.0000 + 0.0000i
+   0.0000 - 0.0000i   0.0000 + 0.0000i
+   0.0000 + 0.0000i   0.0000 + 0.0000i
+   1.0000 + 0.0000i   1.0000 + 0.0000i
+
+The chosen roots are:
+    root         abs(root)   
+     0     0
+     0     0
+     0     0
+
+ 
+PP: Recursive equilibrium law of motion for x(t) on x(t-1):
+     0     0     0
+     0     0     0
+     0     0     0
+
+QQ: Recursive equilibrium law of motion for x(t) on z(t):
+   -0.0743   -0.0104
+   -0.2942   -0.0089
+         0   -0.1000
+
+ 
+Other endogenous variables y(t):
+nomiinterest 
+ 
+RR: Recursive equilibrium law of motion for y(t) on x(t-1):
+     0     0     0
+
+SS: Recursive equilibrium law of motion for y(t) on z(t):
+    0.1100   -0.1085
+
+ 
+Impulse responses to shocks...
+Impulse responses to deviation of state variables from steady state...
+=======================================================================
+Your messages: (You can turn me off with DISPLAY_AT_THE_END = 0)
+OPTIONS.M: You will not receive warning messages immediately.          
+           To turn on immediate warnings, set DISPLAY_IMMEDIATELY = 1  
+           Warning messages are stored in the array "warnings"         
+OPTIONS.M: There are lots of options to choose from.  Type help options
+           to get more information about them!                         
+OPTIONS.M: Note, that I will not calculate moments.                    
+           If you want to have them calculated, set DO_MOMENTS = 1     
+OPTIONS.M: Note, that I will not calculate simulations.                
+           If you want to have them calculated, set DO_SIMUL = 1       
+OPTIONS.M: Note, that I will not plot impulse responses.               
+           If you want to have them plotted, set DO_PLOTS = 1          
+OPTIONS.M: For imp.responses you can choose between joint-, sub-, and  
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+OPTIONS.M: Note, that I will not plot simulations.                     
+           If you want to have them plotted, set SIM_GRAPH=1           
+OPTIONS.M: For simulations you can choose between joint-, sub-, and    
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+OPTIONS.M: Note, that I will not plot spectral densities.              
+           If you want to have them plotted, set DO_HP_GRAPH =1        
+OPTIONS.M: For moments you can choose between joint-, sub-, and        
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+=======================================================================
+Response to monetary shock
+Hit any key when ready...
+Response to technology shock
+Hit any key when ready...
+</pre><img vspace="5" hspace="5" src="homework5_06.png" alt=""> <pre class="codeinput"><span class="comment">%This part is for the impulse ploting with toolkit</span>
+clc
+[Q1,S1]=toolkitplot(sqrt(0.25),sqrt(0.712),6,2/3,1.5,0.5);
+[Q1,S1]=toolkitplot(sqrt(0.25),sqrt(0.712),60,2/3,1.5,0.5);
+[Q1,S1]=toolkitplot(sqrt(0.25),sqrt(0.712),6,eps,1.5,0.5);
+[Q1,S1]=toolkitplot(sqrt(0.25),sqrt(0.712),6,2/3,0.9,0.5);
+[Q1,S1]=toolkitplot(sqrt(0.25),sqrt(0.712),6,2/3,10,0.5);
+</pre><pre class="codeoutput">
+GNP_INDEX =
+
+     2
+
+OPTIONS.M: You will not receive warning messages immediately.          
+           To turn on immediate warnings, set DISPLAY_IMMEDIATELY = 1  
+           Warning messages are stored in the array "warnings"         
+Exogenous states z(t):
+monetaryshock
+technology   
+ 
+Endogenous states x(t):
+inflation    
+outputgap    
+natrinterest 
+ 
+All the roots are:
+    root         abs(root)   
+   1.0e+06 *
+
+         0         0
+         0         0
+         0         0
+    0.0000    0.0000
+    0.0000    0.0000
+    1.0000    1.0000
+
+The chosen roots are:
+    root         abs(root)   
+     0     0
+     0     0
+     0     0
+
+ 
+PP: Recursive equilibrium law of motion for x(t) on x(t-1):
+     0     0     0
+     0     0     0
+     0     0     0
+
+QQ: Recursive equilibrium law of motion for x(t) on z(t):
+   -0.2016   -0.0899
+   -0.7984   -0.0768
+         0   -0.1000
+
+ 
+Other endogenous variables y(t):
+nomiinterest 
+ 
+RR: Recursive equilibrium law of motion for y(t) on x(t-1):
+     0     0     0
+
+SS: Recursive equilibrium law of motion for y(t) on z(t):
+    0.2984   -0.1732
+
+ 
+Impulse responses to shocks...
+Inspect figure. Hit key when ready...
+Inspect figure. Hit key when ready...
+=======================================================================
+Your messages: (You can turn me off with DISPLAY_AT_THE_END = 0)
+OPTIONS.M: You will not receive warning messages immediately.          
+           To turn on immediate warnings, set DISPLAY_IMMEDIATELY = 1  
+           Warning messages are stored in the array "warnings"         
+OPTIONS.M: There are lots of options to choose from.  Type help options
+           to get more information about them!                         
+OPTIONS.M: Note, that I will not calculate moments.                    
+           If you want to have them calculated, set DO_MOMENTS = 1     
+OPTIONS.M: Note, that I will not calculate simulations.                
+           If you want to have them calculated, set DO_SIMUL = 1       
+OPTIONS.M: Note, that I plot impulse responses, which you may dislike. 
+           If you do not want to have them plotted, set DO_PLOTS = 0   
+OPTIONS.M: For imp.responses you can choose between joint-, sub-, and  
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+OPTIONS.M: Note, that I will not plot simulations.                     
+           If you want to have them plotted, set SIM_GRAPH=1           
+OPTIONS.M: For simulations you can choose between joint-, sub-, and    
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+OPTIONS.M: Note, that I will not plot spectral densities.              
+           If you want to have them plotted, set DO_HP_GRAPH =1        
+OPTIONS.M: For moments you can choose between joint-, sub-, and        
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+=======================================================================
+
+GNP_INDEX =
+
+     2
+
+OPTIONS.M: You will not receive warning messages immediately.          
+           To turn on immediate warnings, set DISPLAY_IMMEDIATELY = 1  
+           Warning messages are stored in the array "warnings"         
+Exogenous states z(t):
+monetaryshock
+technology   
+ 
+Endogenous states x(t):
+inflation    
+outputgap    
+natrinterest 
+ 
+All the roots are:
+    root         abs(root)   
+   1.0e+06 *
+
+         0         0
+         0         0
+         0         0
+    0.0000    0.0000
+    0.0000    0.0000
+    1.0000    1.0000
+
+The chosen roots are:
+    root         abs(root)   
+     0     0
+     0     0
+     0     0
+
+ 
+PP: Recursive equilibrium law of motion for x(t) on x(t-1):
+     0     0     0
+     0     0     0
+     0     0     0
+
+QQ: Recursive equilibrium law of motion for x(t) on z(t):
+   -0.0315   -0.0219
+   -0.9685   -0.1448
+         0   -0.1000
+
+ 
+Other endogenous variables y(t):
+nomiinterest 
+ 
+RR: Recursive equilibrium law of motion for y(t) on x(t-1):
+     0     0     0
+
+SS: Recursive equilibrium law of motion for y(t) on z(t):
+    0.4685   -0.1052
+
+ 
+Impulse responses to shocks...
+Inspect figure. Hit key when ready...
+Inspect figure. Hit key when ready...
+=======================================================================
+Your messages: (You can turn me off with DISPLAY_AT_THE_END = 0)
+OPTIONS.M: You will not receive warning messages immediately.          
+           To turn on immediate warnings, set DISPLAY_IMMEDIATELY = 1  
+           Warning messages are stored in the array "warnings"         
+OPTIONS.M: There are lots of options to choose from.  Type help options
+           to get more information about them!                         
+OPTIONS.M: Note, that I will not calculate moments.                    
+           If you want to have them calculated, set DO_MOMENTS = 1     
+OPTIONS.M: Note, that I will not calculate simulations.                
+           If you want to have them calculated, set DO_SIMUL = 1       
+OPTIONS.M: Note, that I plot impulse responses, which you may dislike. 
+           If you do not want to have them plotted, set DO_PLOTS = 0   
+OPTIONS.M: For imp.responses you can choose between joint-, sub-, and  
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+OPTIONS.M: Note, that I will not plot simulations.                     
+           If you want to have them plotted, set SIM_GRAPH=1           
+OPTIONS.M: For simulations you can choose between joint-, sub-, and    
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+OPTIONS.M: Note, that I will not plot spectral densities.              
+           If you want to have them plotted, set DO_HP_GRAPH =1        
+OPTIONS.M: For moments you can choose between joint-, sub-, and        
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+=======================================================================
+
+GNP_INDEX =
+
+     2
+
+OPTIONS.M: You will not receive warning messages immediately.          
+           To turn on immediate warnings, set DISPLAY_IMMEDIATELY = 1  
+           Warning messages are stored in the array "warnings"         
+
+message =
+
+SOLVE.M: Warning! V is not invertible.  However, you have set          
+         IGNORE_VV_SING = 1, and thus, since you have told me to       
+         ignore this, I will proceed.  Keep your fingers crossed...    
+
+&#35686;&#21578;: &#30697;&#38453;&#25509;&#36817;&#22855;&#24322;&#20540;&#65292;&#25110;&#32773;&#32553;&#25918;&#38169;&#35823;&#12290;&#32467;&#26524;&#21487;&#33021;&#19981;&#20934;&#30830;&#12290;RCOND =
+5.730183e-17&#12290; 
+Exogenous states z(t):
+monetaryshock
+technology   
+ 
+Endogenous states x(t):
+inflation    
+outputgap    
+natrinterest 
+ 
+All the roots are:
+    root         abs(root)   
+   1.0e+15 *
+
+         0         0
+         0         0
+         0         0
+    0.0000    0.0000
+    0.0000    0.0000
+    3.4118    3.4118
+
+The chosen roots are:
+    root         abs(root)   
+     0     0
+     0     0
+     0     0
+
+ 
+PP: Recursive equilibrium law of motion for x(t) on x(t-1):
+     0     0     0
+     0     0     0
+     0     0     0
+
+QQ: Recursive equilibrium law of motion for x(t) on z(t):
+   -1.0000   -0.1667
+   -0.0000   -0.0000
+         0   -0.1000
+
+ 
+Other endogenous variables y(t):
+nomiinterest 
+ 
+RR: Recursive equilibrium law of motion for y(t) on x(t-1):
+     0     0     0
+
+SS: Recursive equilibrium law of motion for y(t) on z(t):
+   -0.5000   -0.2500
+
+ 
+Impulse responses to shocks...
+Inspect figure. Hit key when ready...
+Inspect figure. Hit key when ready...
+=======================================================================
+Your messages: (You can turn me off with DISPLAY_AT_THE_END = 0)
+OPTIONS.M: You will not receive warning messages immediately.          
+           To turn on immediate warnings, set DISPLAY_IMMEDIATELY = 1  
+           Warning messages are stored in the array "warnings"         
+OPTIONS.M: There are lots of options to choose from.  Type help options
+           to get more information about them!                         
+OPTIONS.M: Note, that I will not calculate moments.                    
+           If you want to have them calculated, set DO_MOMENTS = 1     
+OPTIONS.M: Note, that I will not calculate simulations.                
+           If you want to have them calculated, set DO_SIMUL = 1       
+OPTIONS.M: Note, that I plot impulse responses, which you may dislike. 
+           If you do not want to have them plotted, set DO_PLOTS = 0   
+OPTIONS.M: For imp.responses you can choose between joint-, sub-, and  
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+OPTIONS.M: Note, that I will not plot simulations.                     
+           If you want to have them plotted, set SIM_GRAPH=1           
+OPTIONS.M: For simulations you can choose between joint-, sub-, and    
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+OPTIONS.M: Note, that I will not plot spectral densities.              
+           If you want to have them plotted, set DO_HP_GRAPH =1        
+OPTIONS.M: For moments you can choose between joint-, sub-, and        
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+SOLVE.M: Warning! V is not invertible.  However, you have set          
+         IGNORE_VV_SING = 1, and thus, since you have told me to       
+         ignore this, I will proceed.  Keep your fingers crossed...    
+=======================================================================
+
+GNP_INDEX =
+
+     2
+
+OPTIONS.M: You will not receive warning messages immediately.          
+           To turn on immediate warnings, set DISPLAY_IMMEDIATELY = 1  
+           Warning messages are stored in the array "warnings"         
+Exogenous states z(t):
+monetaryshock
+technology   
+ 
+Endogenous states x(t):
+inflation    
+outputgap    
+natrinterest 
+ 
+All the roots are:
+    root         abs(root)   
+   1.0e+06 *
+
+         0         0
+         0         0
+         0         0
+    0.0000    0.0000
+    0.0000    0.0000
+    1.0000    1.0000
+
+The chosen roots are:
+    root         abs(root)   
+     0     0
+     0     0
+     0     0
+
+ 
+PP: Recursive equilibrium law of motion for x(t) on x(t-1):
+     0     0     0
+     0     0     0
+     0     0     0
+
+QQ: Recursive equilibrium law of motion for x(t) on z(t):
+   -0.2293   -0.1950
+   -0.9083   -0.1667
+         0   -0.1000
+
+ 
+Other endogenous variables y(t):
+nomiinterest 
+ 
+RR: Recursive equilibrium law of motion for y(t) on x(t-1):
+     0     0     0
+
+SS: Recursive equilibrium law of motion for y(t) on z(t):
+    0.3395   -0.2588
+
+ 
+Impulse responses to shocks...
+Inspect figure. Hit key when ready...
+Inspect figure. Hit key when ready...
+=======================================================================
+Your messages: (You can turn me off with DISPLAY_AT_THE_END = 0)
+OPTIONS.M: You will not receive warning messages immediately.          
+           To turn on immediate warnings, set DISPLAY_IMMEDIATELY = 1  
+           Warning messages are stored in the array "warnings"         
+OPTIONS.M: There are lots of options to choose from.  Type help options
+           to get more information about them!                         
+OPTIONS.M: Note, that I will not calculate moments.                    
+           If you want to have them calculated, set DO_MOMENTS = 1     
+OPTIONS.M: Note, that I will not calculate simulations.                
+           If you want to have them calculated, set DO_SIMUL = 1       
+OPTIONS.M: Note, that I plot impulse responses, which you may dislike. 
+           If you do not want to have them plotted, set DO_PLOTS = 0   
+OPTIONS.M: For imp.responses you can choose between joint-, sub-, and  
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+OPTIONS.M: Note, that I will not plot simulations.                     
+           If you want to have them plotted, set SIM_GRAPH=1           
+OPTIONS.M: For simulations you can choose between joint-, sub-, and    
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+OPTIONS.M: Note, that I will not plot spectral densities.              
+           If you want to have them plotted, set DO_HP_GRAPH =1        
+OPTIONS.M: For moments you can choose between joint-, sub-, and        
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+=======================================================================
+
+GNP_INDEX =
+
+     2
+
+OPTIONS.M: You will not receive warning messages immediately.          
+           To turn on immediate warnings, set DISPLAY_IMMEDIATELY = 1  
+           Warning messages are stored in the array "warnings"         
+Exogenous states z(t):
+monetaryshock
+technology   
+ 
+Endogenous states x(t):
+inflation    
+outputgap    
+natrinterest 
+ 
+All the roots are:
+    root         abs(root)   
+   1.0e+06 *
+
+   0.0000 + 0.0000i   0.0000 + 0.0000i
+   0.0000 + 0.0000i   0.0000 + 0.0000i
+   0.0000 + 0.0000i   0.0000 + 0.0000i
+   0.0000 - 0.0000i   0.0000 + 0.0000i
+   0.0000 + 0.0000i   0.0000 + 0.0000i
+   1.0000 + 0.0000i   1.0000 + 0.0000i
+
+The chosen roots are:
+    root         abs(root)   
+     0     0
+     0     0
+     0     0
+
+ 
+PP: Recursive equilibrium law of motion for x(t) on x(t-1):
+     0     0     0
+     0     0     0
+     0     0     0
+
+QQ: Recursive equilibrium law of motion for x(t) on z(t):
+   -0.0743   -0.0104
+   -0.2942   -0.0089
+         0   -0.1000
+
+ 
+Other endogenous variables y(t):
+nomiinterest 
+ 
+RR: Recursive equilibrium law of motion for y(t) on x(t-1):
+     0     0     0
+
+SS: Recursive equilibrium law of motion for y(t) on z(t):
+    0.1100   -0.1085
+
+ 
+Impulse responses to shocks...
+Inspect figure. Hit key when ready...
+Inspect figure. Hit key when ready...
+=======================================================================
+Your messages: (You can turn me off with DISPLAY_AT_THE_END = 0)
+OPTIONS.M: You will not receive warning messages immediately.          
+           To turn on immediate warnings, set DISPLAY_IMMEDIATELY = 1  
+           Warning messages are stored in the array "warnings"         
+OPTIONS.M: There are lots of options to choose from.  Type help options
+           to get more information about them!                         
+OPTIONS.M: Note, that I will not calculate moments.                    
+           If you want to have them calculated, set DO_MOMENTS = 1     
+OPTIONS.M: Note, that I will not calculate simulations.                
+           If you want to have them calculated, set DO_SIMUL = 1       
+OPTIONS.M: Note, that I plot impulse responses, which you may dislike. 
+           If you do not want to have them plotted, set DO_PLOTS = 0   
+OPTIONS.M: For imp.responses you can choose between joint-, sub-, and  
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+OPTIONS.M: Note, that I will not plot simulations.                     
+           If you want to have them plotted, set SIM_GRAPH=1           
+OPTIONS.M: For simulations you can choose between joint-, sub-, and    
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+OPTIONS.M: Note, that I will not plot spectral densities.              
+           If you want to have them plotted, set DO_HP_GRAPH =1        
+OPTIONS.M: For moments you can choose between joint-, sub-, and        
+           single plots. Try, SIM_JOINT=1, SIM_SUBPLOT=1, SIM_SINGLE=1 
+=======================================================================
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2014b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%Problem 3.3)
+clear,clc
+beta=0.99;sigma=1;phi=1;alpha=1/3;epsilon=6;theta=2/3;Phi_pi=1.5;Phi_y=0.5;
+rho_v=0.5;rho_a=0.9;
+
+psi_ya=((1+phi)*sigma)/(phi+alpha+sigma*(1-alpha))
+Kappa=((1-alpha)/(1-alpha+alpha*epsilon))*(((1-theta)*(1-beta*theta))/theta)...
+    *(sigma+(phi+alpha)/(1-alpha))
+Lamda_a=((sigma*(1-rho_a)+Phi_y)*(1-beta*rho_a)+Kappa*(Phi_pi-rho_a))^(-1);
+Lamda_v=((sigma*(1-rho_v)+Phi_y)*(1-beta*rho_v)+Kappa*(Phi_pi-rho_v))^(-1);
+
+psi_pia=Kappa*Lamda_a*sigma*psi_ya*(rho_a-1);
+psi_ytua=(1-beta*rho_a)*Lamda_a*sigma*psi_ya*(rho_a-1);
+psi_piv=-Kappa*Lamda_v;
+psi_ytuv=-(1-beta*rho_v)*Lamda_v;
+psi_rna=sigma*psi_ya*(rho_a-1);
+psi_ia=Lamda_a*(Phi_pi*Kappa+Phi_y*(1-beta*rho_a))*sigma*psi_ya*(rho_a-1);
+psi_iv=Lamda_v*(-rho_v*Kappa+Phi_y*(1-beta*rho_v));
+%Define the coeffcient matrixes
+Q=[ psi_piv psi_pia; psi_ytuv psi_ytua; 0 psi_rna ];
+S=[ psi_iv psi_ia ];
+%%
+%Problem 3.4)
+clc
+[y,pi,i,r,QQ,SS]=newkeynesian(0,0,6,2/3,1.5,0.5);
+
+disp('%%%%%%%%%%%%%%%%')
+disp('%%%%%%%%%%%%%%%%')
+disp('The parameters derived in the class are showed in Q & S')
+disp('The parameters calculated in toolkit are showed in QQ & SS')
+disp('Show if the parameters are correct')
+Q
+QQ
+S
+SS
+%%
+%Problem 3.4)
+clc
+[y,pi,i,r,QQ,SS]=newkeynesian(sqrt(0.25),0,6,2/3,1.5,0.5);
+clf
+subplot(2,2,1)
+plot(y,'-o','linewidth',2)
+axis([0,20,-0.45,0])
+title('Output Gap')
+subplot(2,2,2)
+plot(pi,'-o','linewidth',2)
+axis([0,20,-0.12,0])
+title('Inflation')
+subplot(2,2,3)
+plot(i,'-o','linewidth',2)
+axis([0,20,0,0.2])
+title('Nominal Interest Rate')
+subplot(2,2,4)
+plot(r,'-o','linewidth',2)
+axis([0,20,0,0.24])
+title('Real Interest Rate')
+suptitle('v_0=0.5')
+%%
+%Problem 3.5)
+clc
+[y,pi,i,r,QQ,SS]=newkeynesian(0,sqrt(0.712),6,2/3,1.5,0.5);
+clf
+subplot(2,2,1)
+plot(y,'-o','linewidth',2)
+axis([0,20,-0.08,0])
+title('Output Gap')
+subplot(2,2,2)
+plot(pi,'-o','linewidth',2)
+title('Inflation')
+axis([0,20,-0.08,0])
+subplot(2,2,3)
+plot(i,'-o','linewidth',2)
+axis([0,20,-0.15,0])
+title('Nominal Interest Rate')
+subplot(2,2,4)
+plot(r,'-o','linewidth',2)
+axis([0,20,-0.08,0])
+title('Real Interest Rate')
+suptitle('a_0=sqrt(0.712)')
+%%
+%Problem 3.6)
+clc
+[y1,pi1,i1,r1]=newkeynesian(sqrt(0.25),0,60,2/3,1.5,0.5);
+[y2,pi2,i2,r2]=newkeynesian(0,sqrt(0.712),60,2/3,1.5,0.5);
+
+disp('Response to monetary shock')
+disp('Hit any key when ready...')
+pause
+
+clf
+subplot(2,2,1)
+plot(y1,'-o','linewidth',2)
+axis([0,20,-0.6,0])
+title('Output Gap')
+subplot(2,2,2)
+plot(pi1,'-o','linewidth',2)
+axis([0,20,-0.02,0])
+title('Inflation')
+subplot(2,2,3)
+plot(i1,'-o','linewidth',2)
+axis([0,20,0,0.3])
+title('Nominal Interest Rate')
+subplot(2,2,4)
+plot(r1,'-o','linewidth',2)
+axis([0,20,0,0.3])
+title('Real Interest Rate')
+suptitle('\epsilon=60 with monetary shock')
+
+disp('Response to technology shock')
+disp('Hit any key when ready...')
+pause
+
+clf
+subplot(2,2,1)
+plot(y2,'-o','linewidth',2)
+axis([0,20,-0.15,0])
+title('Output Gap')
+subplot(2,2,2)
+plot(pi2,'-o','linewidth',2)
+axis([0,20,-0.02,0])
+title('Inflation')
+subplot(2,2,3)
+plot(i2,'-o','linewidth',2)
+axis([0,20,-0.1,0])
+title('Nominal Interest Rate')
+subplot(2,2,4)
+plot(r2,'-o','linewidth',2)
+axis([0,20,-0.1,0])
+title('Real Interest Rate')
+suptitle('\epsilon=60 with technology shock')
+%%
+%Problem 3.7)
+clc
+[y1,pi1,i1,r1]=newkeynesian(sqrt(0.25),0,6,eps,1.5,0.5);
+[y2,pi2,i2,r2]=newkeynesian(0,sqrt(0.712),6,eps,1.5,0.5);
+%eps is a constant value equals to 2.2204e-16
+disp('Response to monetary shock')
+disp('Hit any key when ready...')
+pause
+
+clf
+subplot(2,2,1)
+plot(y1,'-o','linewidth',2)
+axis([0,20,-0.5,0])
+title('Output Gap')
+subplot(2,2,2)
+plot(pi1,'-o','linewidth',2)
+axis([0,20,-0.5,0])
+title('Inflation')
+subplot(2,2,3)
+plot(i1,'-o','linewidth',2)
+axis([0,20,-0.25,0])
+title('Nominal Interest Rate')
+subplot(2,2,4)
+plot(r1,'-o','linewidth',2)
+axis([0,20,-0.5,0.5])
+title('Real Interest Rate')
+suptitle('\theta=0 with monetary shock')
+
+disp('Response to technology shock')
+disp('Hit any key when ready...')
+pause
+
+clf
+subplot(2,2,1)
+plot(y2,'-o','linewidth',2)
+axis([0,20,-0.15,0])
+title('Output Gap')
+subplot(2,2,2)
+plot(pi2,'-o','linewidth',2)
+axis([0,20,-0.15,0])
+title('Inflation')
+subplot(2,2,3)
+plot(i2,'-o','linewidth',2)
+axis([0,20,-0.25,0])
+title('Nominal Interest Rate')
+subplot(2,2,4)
+plot(r2,'-o','linewidth',2)
+axis([0,20,-0.1,0])
+title('Real Interest Rate')
+suptitle('\theta=0 with technology shock')
+%%
+%Problem 3.8),part1
+clc
+[y1,pi1,i1,r1]=newkeynesian(sqrt(0.25),0,6,2/3,0.9,0.5);
+[y2,pi2,i2,r2]=newkeynesian(0,sqrt(0.712),6,2/3,0.9,0.5);
+
+disp('Response to monetary shock')
+disp('Hit any key when ready...')
+pause
+
+clf
+subplot(2,2,1)
+plot(y1,'-o','linewidth',2)
+axis([0,20,-0.5,0])
+title('Output Gap')
+subplot(2,2,2)
+plot(pi1,'-o','linewidth',2)
+axis([0,20,-0.12,0])
+title('Inflation')
+subplot(2,2,3)
+plot(i1,'-o','linewidth',2)
+axis([0,20,0,0.2])
+title('Nominal Interest Rate')
+subplot(2,2,4)
+plot(r1,'-o','linewidth',2)
+axis([0,20,0,0.25])
+title('Real Interest Rate')
+suptitle('\phi_\pi=0.9 with monetary shock')
+
+disp('Response to technology shock')
+disp('Hit any key when ready...')
+pause
+
+clf
+subplot(2,2,1)
+plot(y2,'-o','linewidth',2)
+axis([0,20,-0.15,0])
+title('Output Gap')
+subplot(2,2,2)
+plot(pi2,'-o','linewidth',2)
+axis([0,20,-0.15,0])
+title('Inflation')
+subplot(2,2,3)
+plot(i2,'-o','linewidth',2)
+axis([0,20,-0.21,0])
+title('Nominal Interest Rate')
+subplot(2,2,4)
+plot(r2,'-o','linewidth',2)
+axis([0,20,-0.1,0])
+title('Real Interest Rate')
+suptitle('\phi_\pi=0.9 with technology shock')
+%%
+%Problem 3.8),part2
+clc
+[y1,pi1,i1,r1]=newkeynesian(sqrt(0.25),0,6,2/3,10,0.5);
+[y2,pi2,i2,r2]=newkeynesian(0,sqrt(0.712),6,2/3,10,0.5);
+
+disp('Response to monetary shock')
+disp('Hit any key when ready...')
+pause
+
+clf
+subplot(2,2,1)
+plot(y1,'-o','linewidth',2)
+axis([0,20,-0.2,0])
+title('Output Gap')
+subplot(2,2,2)
+plot(pi1,'-o','linewidth',2)
+title('Inflation')
+subplot(2,2,3)
+plot(i1,'-o','linewidth',2)
+axis([0,20,0,0.1])
+title('Nominal Interest Rate')
+subplot(2,2,4)
+plot(r1,'-o','linewidth',2)
+axis([0,20,-0,0.1])
+title('Real Interest Rate')
+suptitle('\phi_\pi=10 with monetary shock')
+
+disp('Response to technology shock')
+disp('Hit any key when ready...')
+pause
+
+clf
+subplot(2,2,1)
+plot(y2,'-o','linewidth',2)
+axis([0,20,-10e-3,0])
+title('Output Gap')
+subplot(2,2,2)
+plot(pi2,'-o','linewidth',2)
+axis([0,20,-10e-3,0])
+title('Inflation')
+subplot(2,2,3)
+plot(i2,'-o','linewidth',2)
+axis([0,20,-0.1,0])
+title('Nominal Interest Rate')
+subplot(2,2,4)
+plot(r2,'-o','linewidth',2)
+axis([0,20,-0.1,0])
+title('Real Interest Rate')
+suptitle('\phi_\pi=10 with technology shock')
+%%
+%This part is for the impulse ploting with toolkit
+clc
+[Q1,S1]=toolkitplot(sqrt(0.25),sqrt(0.712),6,2/3,1.5,0.5);
+[Q1,S1]=toolkitplot(sqrt(0.25),sqrt(0.712),60,2/3,1.5,0.5);
+[Q1,S1]=toolkitplot(sqrt(0.25),sqrt(0.712),6,eps,1.5,0.5);
+[Q1,S1]=toolkitplot(sqrt(0.25),sqrt(0.712),6,2/3,0.9,0.5);
+[Q1,S1]=toolkitplot(sqrt(0.25),sqrt(0.712),6,2/3,10,0.5);
+##### SOURCE END #####
+--></body></html>
